@@ -1,0 +1,6 @@
+RewriteEngine On
+
+# Redirect API calls to the appropriate script
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/(.*)$ api/$1.php [QSA,NC,L]
