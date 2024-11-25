@@ -3,8 +3,13 @@
 session_start();
 
 // Check if the user is logged in and is an admin
-if (!isset($_SESSION['username']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['username']) || !isset($_SESSION['role'])) {
     header("Location: login.php");
+    exit();
+}
+
+if ($_SESSION['role'] !== 'technician' && $_SESSION['role'] !== 'admin') {
+    header("Location: dashboard.php");
     exit();
 }
 
@@ -89,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $stmt = $conn->prepare("UPDATE items SET name = ?, category_id = ?, quantity = ?, minQuantity = ?, cost = ?, price = ?, location = ?, vendor = ? WHERE item_id = ?");
         if ($stmt) {
-            $stmt->bind_param("siiidddsi", $name, $category_id, $quantity, $minQuantity, $cost, $price, $location, $vendor, $item_id);
+            $stmt->bind_param("siiiddssi", $name, $category_id, $quantity, $minQuantity, $cost, $price, $location, $vendor, $item_id);
             if ($stmt->execute()) {
                 // Redirect to dashboard after successful update
                 header("Location: dashboard.php");

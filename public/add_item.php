@@ -3,8 +3,13 @@
 session_start();
 
 // Check if the user is logged in and is an admin
-if (!isset($_SESSION['username']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['username']) || !isset($_SESSION['role'])) {
     header("Location: login.php");
+    exit();
+}
+
+if ($_SESSION['role'] !== 'technician' && $_SESSION['role'] !== 'admin') {
+    header("Location: dashboard.php");
     exit();
 }
 
@@ -70,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $stmt = $conn->prepare("INSERT INTO items (name, category_id, quantity, minQuantity, cost, price, location, vendor) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         if ($stmt) {
-            $stmt->bind_param("siiiddds", $name, $category_id, $quantity, $minQuantity, $cost, $price, $location, $vendor);
+            $stmt->bind_param("siiiddss", $name, $category_id, $quantity, $minQuantity, $cost, $price, $location, $vendor);
             if ($stmt->execute()) {
                 // Redirect to dashboard after successful insertion
                 header("Location: dashboard.php");

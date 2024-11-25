@@ -49,7 +49,7 @@ $conn->close();
 <body>
     <div class="header">
         <div class="welcome">
-            Welcome, <strong><?php echo htmlspecialchars($username); ?></strong>! (Role: <strong><?php echo htmlspecialchars($role); ?></strong>)
+            Welcome! (Role: <strong><?php echo htmlspecialchars($role); ?></strong>)
         </div>
         <form action="logout.php" method="POST">
             <button type="submit" class="logout-btn">Logout</button>
@@ -59,10 +59,17 @@ $conn->close();
     <div class="content">
         <h2>Inventory Items</h2>
         
+        <!-- Add Item Button (Visible to Admins and Technicians) -->
+        <?php if ($role === 'admin' || $role === 'technician'): ?>
+            <a href="add_item.php" class="btn">Add Item</a>
+        <?php endif; ?>
+
         <!-- Add Item Button (Visible to Admins) -->
         <?php if ($role === 'admin'): ?>
-            <a href="add_item.php" class="btn">Add New Item</a>
+            <a href="manage_users.php" class="btn">Manage Users</a>
         <?php endif; ?>
+
+        <a href="reorder_report.php" class="btn">Generate Report</a>
 
         <!-- Display Error Message if Any -->
         <?php if (!empty($error_message)): ?>
@@ -85,7 +92,7 @@ $conn->close();
             <th scope="col">Price ($)</th>
             <th scope="col">Location</th>
             <th scope="col">Vendor</th>
-            <?php if ($role === 'admin'): ?>
+            <?php if ($role === 'admin' || $role === 'technician'): ?>
                 <th scope="col">Actions</th>
             <?php endif; ?>
         </tr>
@@ -102,12 +109,14 @@ $conn->close();
                 <td><?php echo htmlspecialchars(number_format($item['price'], 2)); ?></td>
                 <td><?php echo htmlspecialchars($item['location']); ?></td>
                 <td><?php echo htmlspecialchars($item['vendor']); ?></td>
-                <?php if ($role === 'admin'): ?>
-                    <td>
-                        <a href="edit_item.php?id=<?php echo htmlspecialchars($item['item_id']); ?>" class="btn btn-edit">Edit</a>
+                <td>
+                    <?php if ($role === 'admin' || $role ==='technician'): ?>
+                    <a href="edit_item.php?id=<?php echo htmlspecialchars($item['item_id']); ?>" class="btn btn-edit">Edit</a>
+                    <?php endif; ?>
+                    <?php if ($role === 'admin'):?>
                         <a href="delete_item.php?id=<?php echo htmlspecialchars($item['item_id']); ?>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
-                    </td>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
