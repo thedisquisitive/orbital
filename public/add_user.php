@@ -8,7 +8,7 @@ if (!isset($_SESSION['username']) || !isset($_SESSION['role'])) {
     exit();
 }
 
-if ($_SESSION['role'] !== 'technician' || $_SESSION['role'] !== 'admin') {
+if ($_SESSION['role'] !== 'admin') {
     header("Location: dashboard.php");
     exit();
 }
