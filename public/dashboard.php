@@ -11,49 +11,109 @@ if (!isset($_SESSION['username']) || !isset($_SESSION['role'])) {
 
 // Retrieve user information from the session
 $username = $_SESSION['username'];
-$role = $_SESSION['role'];
+$role     = $_SESSION['role'];
 
 // Include the database connection
 include_once '../includes/db_connect.php';
 
 // Initialize variables
-$items = [];
+$items         = [];
 $error_message = "";
+$search_term   = "";
 
-// Define valid columns for sorting
+/**
+ * PART 1: HANDLE SEARCH
+ * 
+ * We'll capture a 'search' term from the query parameters
+ * and sanitize it to prevent potential security issues.
+ */
+if (isset($_GET['search'])) {
+    $search_term = trim($_GET['search']);
+    $search_term = htmlspecialchars($search_term);
+}
+
+/**
+ * PART 2: HANDLE SORTING
+ * 
+ * We define valid sort columns and parameters for safe usage
+ * in the ORDER BY clause.
+ */
 $valid_sort_columns = [
-    'item_id' => 'items.item_id',
-    'name' => 'items.name',
+    'item_id'       => 'items.item_id',
+    'name'          => 'items.name',
     'category_name' => 'categories.category_name',
-    'quantity' => 'items.quantity',
-    'minQuantity' => 'items.minQuantity',
-    'cost' => 'items.cost',
-    'price' => 'items.price',
-    'location' => 'items.location',
-    'vendor' => 'items.vendor'
+    'quantity'      => 'items.quantity',
+    'minQuantity'   => 'items.minQuantity',
+    'cost'          => 'items.cost',
+    'price'         => 'items.price',
+    'location'      => 'items.location',
+    'vendor'        => 'items.vendor'
 ];
 
 // Get sorting parameters from the URL
-$sort = isset($_GET['sort']) && array_key_exists($_GET['sort'], $valid_sort_columns) ? $_GET['sort'] : 'item_id';
-$order = isset($_GET['order']) && in_array(strtoupper($_GET['order']), ['ASC', 'DESC']) ? strtoupper($_GET['order']) : 'ASC';
+$sort  = isset($_GET['sort']) && array_key_exists($_GET['sort'], $valid_sort_columns)
+         ? $_GET['sort']
+         : 'item_id';
+
+$order = isset($_GET['order']) && in_array(strtoupper($_GET['order']), ['ASC', 'DESC'])
+         ? strtoupper($_GET['order'])
+         : 'ASC';
 
 // Determine the opposite order for toggling
-$opposite_order = $order === 'ASC' ? 'DESC' : 'ASC';
+$opposite_order = ($order === 'ASC') ? 'DESC' : 'ASC';
 
-// Fetch inventory items from the database with sorting
-$sql = "SELECT items.item_id, items.name, categories.category_name, items.quantity, items.minQuantity, items.cost, items.price, items.location, items.vendor 
-        FROM items 
-        JOIN categories ON items.category_id = categories.category_id 
-        ORDER BY " . $valid_sort_columns[$sort] . " " . $order;
+/**
+ * PART 3: BUILD THE SQL QUERY
+ * 
+ * We base the query on both sorting and searching. We'll use placeholders
+ * for the search term if it's provided.
+ */
+$sql = "SELECT items.item_id, 
+               items.name, 
+               categories.category_name, 
+               items.quantity, 
+               items.minQuantity, 
+               items.cost, 
+               items.price, 
+               items.location, 
+               items.vendor
+        FROM items
+        JOIN categories ON items.category_id = categories.category_id ";
 
-$result = $conn->query($sql);
+// If a search term is provided, add a WHERE clause
+if (!empty($search_term)) {
+    $sql .= "WHERE (items.name LIKE CONCAT('%', ?, '%'))
+              OR (categories.category_name LIKE CONCAT('%', ?, '%'))
+              OR (items.vendor LIKE CONCAT('%', ?, '%'))
+              OR (items.location LIKE CONCAT('%', ?, '%')) ";
+}
 
-if ($result) {
-    while ($row = $result->fetch_assoc()) {
-        $items[] = $row;
+// Add the ORDER BY clause
+$sql .= "ORDER BY " . $valid_sort_columns[$sort] . " " . $order;
+
+// Prepare and execute the statement
+$stmt = $conn->prepare($sql);
+
+if ($stmt) {
+    if (!empty($search_term)) {
+        // Bind the search term for all placeholders
+        $stmt->bind_param("ssss", $search_term, $search_term, $search_term, $search_term);
     }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $items[] = $row;
+        }
+    } else {
+        $error_message = "Error fetching items: " . $conn->error;
+    }
+
+    $stmt->close();
 } else {
-    $error_message = "Error fetching items: " . $conn->error;
+    $error_message = "Database error: " . $conn->error;
 }
 
 $conn->close();
@@ -71,24 +131,33 @@ $conn->close();
             position: relative;
             cursor: pointer;
         }
-
         th a {
             color: white;
             text-decoration: none;
             display: block;
         }
-
         th .sort-indicator {
             margin-left: 8px;
             font-size: 0.8em;
         }
-
         th.sorted-asc::after {
             content: " ▲";
         }
-
         th.sorted-desc::after {
             content: " ▼";
+        }
+        /* Simple styling for search form */
+        .search-form {
+            margin-bottom: 20px;
+        }
+        .search-form input[type="text"] {
+            width: 250px;
+            padding: 6px;
+            margin-right: 6px;
+        }
+        .search-form button {
+            padding: 6px 12px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -104,6 +173,17 @@ $conn->close();
 
     <div class="content">
         <h2>Inventory Items</h2>
+
+        <!-- SEARCH FORM -->
+        <form class="search-form" method="GET" action="dashboard.php">
+            <input type="text" name="search" placeholder="Search items, categories, vendor, location..."
+                   value="<?php echo htmlspecialchars($search_term); ?>" />
+            <button type="submit">Search</button>
+
+            <!-- Preserve current sorting when searching -->
+            <input type="hidden" name="sort" value="<?php echo htmlspecialchars($sort); ?>" />
+            <input type="hidden" name="order" value="<?php echo htmlspecialchars($order); ?>" />
+        </form>
         
         <!-- Add Item Button (Visible to Admins and Technicians) -->
         <?php if ($role === 'admin' || $role === 'technician'): ?>
@@ -132,26 +212,27 @@ $conn->close();
                         <?php
                         // Define column headers and their corresponding sort keys
                         $columns = [
-                            'item_id' => 'Item ID',
-                            'name' => 'Name',
+                            'item_id'       => 'Item ID',
+                            'name'          => 'Name',
                             'category_name' => 'Category',
-                            'quantity' => 'Quantity',
-                            'minQuantity' => 'Min Quantity',
-                            'cost' => 'Cost ($)',
-                            'price' => 'Price ($)',
-                            'location' => 'Location',
-                            'vendor' => 'Vendor'
+                            'quantity'      => 'Quantity',
+                            'minQuantity'   => 'Min Quantity',
+                            'cost'          => 'Cost ($)',
+                            'price'         => 'Price ($)',
+                            'location'      => 'Location',
+                            'vendor'        => 'Vendor'
                         ];
 
                         foreach ($columns as $key => $label):
                             // Determine the class for the sort indicator
                             $sort_class = '';
                             if ($sort === $key) {
-                                $sort_class = $order === 'ASC' ? 'sorted-asc' : 'sorted-desc';
+                                $sort_class = ($order === 'ASC') ? 'sorted-asc' : 'sorted-desc';
                             }
-                        ?>
+                            ?>
                             <th class="<?php echo $sort_class; ?>">
-                                <a href="?sort=<?php echo urlencode($key); ?>&order=<?php echo $sort === $key ? $opposite_order : 'ASC'; ?>">
+                                <a href="?sort=<?php echo urlencode($key); ?>&order=<?php echo ($sort === $key ? $opposite_order : 'ASC'); ?>
+                                    &search=<?php echo urlencode($search_term); // preserve search term ?>">
                                     <?php echo htmlspecialchars($label); ?>
                                 </a>
                             </th>
@@ -187,7 +268,11 @@ $conn->close();
                 </tbody>
             </table>
         <?php else: ?>
-            <p>No inventory items found.</p>
+            <p>No inventory items found 
+            <?php if (!empty($search_term)): ?>
+                for "<strong><?php echo htmlspecialchars($search_term); ?></strong>"
+            <?php endif; ?>
+            .</p>
         <?php endif; ?>
     </div>
 </body>
