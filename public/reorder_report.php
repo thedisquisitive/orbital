@@ -24,8 +24,8 @@ $error_message = "";
 $sql = "SELECT items.item_id, items.name, categories.category_name, items.quantity, items.minQuantity, items.vendor 
         FROM items 
         JOIN categories ON items.category_id = categories.category_id 
-        WHERE items.quantity <= items.minQuantity 
-        ORDER BY items.item_id ASC";
+        WHERE items.quantity < items.minQuantity 
+        ORDER BY categories.category_name ASC";
 
 $result = $conn->query($sql);
 
