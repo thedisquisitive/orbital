@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Sputnik")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9a2b55d049a0ae9c53b5b8d094d55e58e031612c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c5c79b26f70e9c122cd487685a16565269ae72e")]
 [assembly: System.Reflection.AssemblyProductAttribute("Sputnik")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Sputnik")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
