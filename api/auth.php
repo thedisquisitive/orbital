@@ -21,7 +21,7 @@ function isAuthenticated() {
 function validateToken($token) {
     // Validate the token (e.g., check signature, expiration)
     // For this example, we'll assume a static token
-    $validToken = "Hd83kKisdijda%203914k39D(Dkeja";
+    $validToken = "token";
     return $token === $validToken;
 }
 ?>

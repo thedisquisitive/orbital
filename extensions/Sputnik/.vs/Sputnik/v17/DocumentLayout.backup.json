@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CF36F724-4962-47F9-81E5-9E3CD56517B1}|Sputnik.csproj|c:\\xampp\\htdocs\\orbital\\extensions\\sputnik\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{CF36F724-4962-47F9-81E5-9E3CD56517B1}|Sputnik.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{3ECB0D37-DD88-4DA2-9250-F877A61A9C18}|Sputnik.vcxproj|C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\Sputnik.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3ECB0D37-DD88-4DA2-9250-F877A61A9C18}|Sputnik.vcxproj|solutionrelative:Sputnik.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CF36F724-4962-47F9-81E5-9E3CD56517B1}|Sputnik.csproj|c:\\xampp\\htdocs\\orbital\\extensions\\sputnik\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF36F724-4962-47F9-81E5-9E3CD56517B1}|Sputnik.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3ECB0D37-DD88-4DA2-9250-F877A61A9C18}|Sputnik.vcxproj|C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\inventory_api.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3ECB0D37-DD88-4DA2-9250-F877A61A9C18}|Sputnik.vcxproj|solutionrelative:inventory_api.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECB0D37-DD88-4DA2-9250-F877A61A9C18}|Sputnik.vcxproj|C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\vcpkg.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{3ECB0D37-DD88-4DA2-9250-F877A61A9C18}|Sputnik.vcxproj|solutionrelative:vcpkg.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3ECB0D37-DD88-4DA2-9250-F877A61A9C18}|Sputnik.vcxproj|C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\JSON.HPP||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3ECB0D37-DD88-4DA2-9250-F877A61A9C18}|Sputnik.vcxproj|solutionrelative:JSON.HPP||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,31 +26,55 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "MainWindow.xaml",
-              "ToolTip": "C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\MainWindow.xaml",
-              "RelativeToolTip": "MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-01-08T20:39:04.856Z",
-              "EditorCaption": ""
+              "DocumentIndex": 3,
+              "Title": "json.hpp",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\json.hpp",
+              "RelativeDocumentMoniker": "json.hpp",
+              "ToolTip": "C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\json.hpp",
+              "RelativeToolTip": "json.hpp",
+              "ViewState": "AgIAAIFfAAAAAAAAAAASwJVfAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-01-10T16:38:31.439Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
-              "ToolTip": "C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\MainWindow.xaml.cs",
-              "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-08T20:39:01.624Z",
+              "Title": "inventory_api.h",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\inventory_api.h",
+              "RelativeDocumentMoniker": "inventory_api.h",
+              "ToolTip": "C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\inventory_api.h",
+              "RelativeToolTip": "inventory_api.h",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAACgAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-01-10T16:18:40.309Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "vcpkg.json",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\vcpkg.json",
+              "RelativeDocumentMoniker": "vcpkg.json",
+              "ToolTip": "C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\vcpkg.json",
+              "RelativeToolTip": "vcpkg.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-01-09T21:56:15.522Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Sputnik.cpp",
+              "DocumentMoniker": "C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\Sputnik.cpp",
+              "RelativeDocumentMoniker": "Sputnik.cpp",
+              "ToolTip": "C:\\xampp\\htdocs\\orbital\\extensions\\Sputnik\\Sputnik.cpp",
+              "RelativeToolTip": "Sputnik.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-01-09T21:49:20.136Z",
               "EditorCaption": ""
             }
           ]

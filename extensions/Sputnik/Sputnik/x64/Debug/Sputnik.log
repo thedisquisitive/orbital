@@ -1,0 +1,5 @@
+﻿  The vcpkg manifest was disabled, but we found a manifest file in C:\xampp\htdocs\orbital\extensions\Sputnik\. You may want to enable vcpkg manifests in your properties page or pass /p:VcpkgEnableManifest=true to the msbuild invocation.
+  Sputnik.cpp
+  Sputnik.vcxproj -> C:\xampp\htdocs\orbital\extensions\Sputnik\x64\Debug\Sputnik.exe
+  'pwsh.exe' is not recognized as an internal or external command,
+  operable program or batch file.
